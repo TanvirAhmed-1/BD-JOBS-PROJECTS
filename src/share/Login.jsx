@@ -1,20 +1,28 @@
-
 import login from "../assets/Login.json";
 import Lottie from "lottie-react";
 
-// Login page 
+// Login page
 
 function Login() {
+  const handleForm = (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    const email = form.email.value;
+
+    const password = form.password.value;
+    const user = { email, password };
+    console.log(user);
+  };
   return (
     <div className="hero bg-gray-200 dark:bg-black min-h-screen">
       <div className="flex justify-center gap-4 items-center w-[80%] flex-col lg:flex-row-reverse">
         <div className=" lg:w-[55%] md:flex-1">
-          
-          <Lottie className="" animationData={login}  loop={true} ></Lottie>
+          <Lottie className="" animationData={login} loop={true}></Lottie>
         </div>
         <div className="card bg-base-100 md:flex-1 lg:w-[35%] shrink-0 shadow-2xl flex-1 lg:p-10 p-4 ">
           <h1 className="text-5xl text-center font-bold">Login now!</h1>
-          <form className="card-body">
+          <form onSubmit={handleForm} className="card-body">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>

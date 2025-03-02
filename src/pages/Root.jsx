@@ -1,14 +1,18 @@
 import React from 'react';
-import Register from '../share/Register';
-import Login from '../share/Login';
+import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
+import { Outlet } from 'react-router-dom';
 
 const Root = () => {
     return (
-        <div>
-            <Register></Register>
-            <section>
-                <Login></Login>
-            </section>
+        <div className='bg-white'>
+            <nav>
+                <NavBar></NavBar>
+            </nav>
+            <Outlet></Outlet>
+            <footer>
+                <Footer></Footer>
+            </footer>
         </div>
     );
 };
