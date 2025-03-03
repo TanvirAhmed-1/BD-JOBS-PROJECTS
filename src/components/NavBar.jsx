@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../authentication/Authentication";
 
 const NavBar = () => {
+  const{user}=useContext(AuthContext)
   const link = (
     <>
       <li>
         <NavLink to={"/"}>Home</NavLink>
       </li>
       <li>
-        <NavLink to={"/login"}>Jobs</NavLink>
+        <NavLink to={"/addJobs"}>Add Jobs</NavLink>
       </li>
 
       <li>
-        <NavLink to={"/register"}>Item 1</NavLink>
+        <NavLink to={"/myApplication"}>My Apply</NavLink>
       </li>
     </>
   );
@@ -58,9 +60,17 @@ const NavBar = () => {
         <ul className="flex gap-6 md:text-2xl font-medium text-black menu-horizontal px-1">{link}</ul>
       </div>
       <div className="navbar-end gap-3">
-        <Link to={"/login"}>
-          <a className="btn text-green-500 text-nowrap bg-white border-green-500 md:text-xl hover:border-none hover:text-white hover:bg-green-500 font-semibold">Sign In</a>
-        </Link>
+<div>
+  {
+    user && user.email ?<Link to={"/login"}>
+    <a className="btn text-green-500 text-nowrap bg-white border-green-500 md:text-xl hover:border-none hover:text-white hover:bg-green-500 font-semibold">Sign Out</a>
+  </Link>
+    :        
+    <Link to={"/login"}>
+    <a className="btn text-green-500 text-nowrap bg-white border-green-500 md:text-xl hover:border-none hover:text-white hover:bg-green-500 font-semibold">Sign In</a>
+  </Link>
+  }
+</div>
         <div className="">
           <a className="btn   text-green-500  bg-white border-green-500 hover:border-none hover:text-white hover:bg-green-500 md:text-xl font-semibold">Add Jobs</a>
         </div>

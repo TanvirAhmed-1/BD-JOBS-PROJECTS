@@ -1,9 +1,12 @@
 import Lottie from "lottie-react";
-import React from "react";
+import React, { useContext } from "react";
 import register from "../assets/Signin.json";
 import GoogleSignIn from "./GoogleSignIn";
+import { AuthContext } from "../authentication/Authentication";
 
 const Register = () => {
+  const {user,setUser,googleProvider}=useContext(AuthContext)
+
   const handleform=(e)=>{
    e.preventDefault()
    const form=e.target 
@@ -13,6 +16,7 @@ const Register = () => {
    const password=form.password.value 
    const user={name ,email ,photo ,password}
    console.log(user)
+
   }
   return (
     <div className="hero bg-gray-200 dark:bg-black min-h-screen">
@@ -76,7 +80,6 @@ const Register = () => {
               <button className="btn btn-primary">Register</button>
             </div>
           </form>
-          <GoogleSignIn></GoogleSignIn>
         </div>
       </div>
     </div>

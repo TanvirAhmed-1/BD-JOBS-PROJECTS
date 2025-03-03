@@ -1,5 +1,6 @@
 import login from "../assets/Login.json";
 import Lottie from "lottie-react";
+import GoogleSignIn from "./GoogleSignIn";
 
 // Login page
 
@@ -54,7 +55,11 @@ function Login() {
               <button className="btn btn-primary">Login</button>
             </div>
           </form>
+          <div>
+          <GoogleSignIn></GoogleSignIn>
         </div>
+        </div>
+
       </div>
     </div>
   );
