@@ -1,10 +1,15 @@
 import login from "../assets/Login.json";
 import Lottie from "lottie-react";
 import GoogleSignIn from "./GoogleSignIn";
+import { useContext } from "react";
+import { AuthContext } from "../authentication/Authentication";
+import axios from "axios";
 
 // Login page
 
 function Login() {
+  const {user,userSignIn}=useContext(AuthContext)
+
   const handleForm = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -12,8 +17,19 @@ function Login() {
     const email = form.email.value;
 
     const password = form.password.value;
+
     const user = { email, password };
     console.log(user);
+    userSignIn(email ,password)
+    .then(data=>{
+      console.log(data.user)
+      const userEmail=data.user.email
+      axios.get(`http://localhost:5000/jwt`,{ params: { email: userEmail }, withCredentials: true })
+      .then(res=>console.log(res.data))
+    })
+    .then(err=>{
+      console.log(err.message)
+    })
   };
   return (
     <div className="hero bg-gray-200 dark:bg-black min-h-screen">
@@ -30,6 +46,7 @@ function Login() {
               </label>
               <input
                 type="email"
+                name="email"
                 placeholder="email"
                 className="input input-bordered"
                 required
@@ -41,6 +58,7 @@ function Login() {
               </label>
               <input
                 type="password"
+                name="password"
                 placeholder="password"
                 className="input input-bordered"
                 required

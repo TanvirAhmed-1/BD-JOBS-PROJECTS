@@ -3,7 +3,18 @@ import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../authentication/Authentication";
 
 const NavBar = () => {
-  const{user}=useContext(AuthContext)
+  const{user,userSignOut , setUser}=useContext(AuthContext)
+
+const handleSignOut=()=>{
+  userSignOut()
+  .then(data=>{
+    console.log(data.user)
+    setUser(data.user)
+  })
+  .then(err=>{
+    console.log(err.message)
+  })
+}
   const link = (
     <>
       <li>
@@ -63,17 +74,17 @@ const NavBar = () => {
 <div>
   {
     user && user.email ?<Link to={"/login"}>
-    <a className="btn text-green-500 text-nowrap bg-white border-green-500 md:text-xl hover:border-none hover:text-white hover:bg-green-500 font-semibold">Sign Out</a>
+    <a onClick={handleSignOut} className="btn text-green-500 text-nowrap bg-white border-green-500 md:text-xl hover:border-none hover:text-white hover:bg-green-500 font-semibold">Sign Out</a>
   </Link>
     :        
     <Link to={"/login"}>
-    <a className="btn text-green-500 text-nowrap bg-white border-green-500 md:text-xl hover:border-none hover:text-white hover:bg-green-500 font-semibold">Sign In</a>
+    <p className="btn text-green-500 text-nowrap bg-white border-green-500 md:text-xl hover:border-none hover:text-white hover:bg-green-500 font-semibold">Sign In</p>
   </Link>
   }
 </div>
-        <div className="">
-          <a className="btn   text-green-500  bg-white border-green-500 hover:border-none hover:text-white hover:bg-green-500 md:text-xl font-semibold">Add Jobs</a>
-        </div>
+        <Link to={"/register"} className="">
+          <p className="btn   text-green-500  bg-white border-green-500 hover:border-none hover:text-white hover:bg-green-500 md:text-xl font-semibold">Register</p>
+        </Link>
       </div>
     </div>
   );

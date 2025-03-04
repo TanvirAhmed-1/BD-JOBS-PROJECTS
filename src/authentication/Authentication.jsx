@@ -1,10 +1,13 @@
 import React, { createContext, useEffect, useState } from "react";
 import {
+  createUserWithEmailAndPassword,
   getAuth,
   GithubAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
 } from "firebase/auth";
 
 import { app } from "./../firebase/firebase.init";
@@ -31,10 +34,19 @@ const Authentication = ({children }) => {
   };
 
   //user create
-
+const registerUser=(email, password)=>{
+ return createUserWithEmailAndPassword(auth, email, password)
+}
   //user delete
-
+   const userSignOut=()=>{
+    return signOut(auth)
+   }
   //user photo and url update
+
+  //user sign in
+  const userSignIn=(email, password)=>{
+    return signInWithEmailAndPassword(auth, email, password)
+  }
 
   const authInfo = {
     user,
@@ -42,6 +54,9 @@ const Authentication = ({children }) => {
     loader,
     gitHubSignIn,
     googleSignIn,
+    registerUser,
+    userSignIn,
+    userSignOut,
   };
 
   useEffect(() => {
