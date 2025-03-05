@@ -11,18 +11,20 @@ import {
 } from "firebase/auth";
 
 import { app } from "./../firebase/firebase.init";
+import axios from "axios";
 
 export const AuthContext = createContext(null);
 
-const Authentication = ({children }) => {
+const Authentication = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loader, setLoader] = useState();
+  const [loader, setLoader] = useState(true);
 
   const auth = getAuth(app);
 
   //google login
   const googleProvider = new GoogleAuthProvider();
   const googleSignIn = () => {
+    setLoader(true);
     return signInWithPopup(auth, googleProvider);
   };
 
@@ -30,23 +32,27 @@ const Authentication = ({children }) => {
 
   const gitHubProvider = new GithubAuthProvider();
   const gitHubSignIn = () => {
+    setLoader(true);
     return signInWithPopup(auth, gitHubProvider);
   };
 
   //user create
-const registerUser=(email, password)=>{
- return createUserWithEmailAndPassword(auth, email, password)
-}
+  const registerUser = (email, password) => {
+    setLoader(true);
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
   //user delete
-   const userSignOut=()=>{
-    return signOut(auth)
-   }
+  const userSignOut = () => {
+    setLoader(true);
+    return signOut(auth);
+  };
   //user photo and url update
 
   //user sign in
-  const userSignIn=(email, password)=>{
-    return signInWithEmailAndPassword(auth, email, password)
-  }
+  const userSignIn = (email, password) => {
+    setLoader(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
   const authInfo = {
     user,
@@ -62,6 +68,22 @@ const registerUser=(email, password)=>{
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      console.log("currentUser", currentUser);
+      if (currentUser?.email) {
+        const user = { email: currentUser.email };
+        axios
+          .post(`http://localhost:5000/jwt`, user, { withCredentials: true })
+          .then((res) => {console.log(res.data)
+            setLoader(false);
+          });
+      }
+      else{
+        axios.post(`http://localhost:5000/logout`,{},{withCredentials:true})
+        .then(res=>{console.log(res.data)
+          setLoader(false);
+        })
+      }
+      
     });
 
     return () => {

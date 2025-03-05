@@ -4,12 +4,12 @@ import { IoBagSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
 const JobCard = ({ jobs }) => {
-  console.log(jobs);
+  // console.log(jobs);
 
   const {
     jobType,
     company_logo,
-    company,
+    
 
     requirements,
     location,
@@ -52,7 +52,7 @@ const JobCard = ({ jobs }) => {
          }
         </div>
         <Link to={`/jobDetails/${_id}`} className="card-actions justify-end pt-2">
-          <button className="btn bg-gray-300 text-black border-none group-hover:bg-white group-hover:text-green-600">Apply Now</button>
+          <button className="btn bg-gray-300 text-black border-none group-hover:bg-white group-hover:text-green-600">View Details</button>
         </Link>
       </div>
     </div>

@@ -4,11 +4,13 @@ import GoogleSignIn from "./GoogleSignIn";
 import { useContext } from "react";
 import { AuthContext } from "../authentication/Authentication";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 // Login page
 
 function Login() {
-  const {user,userSignIn}=useContext(AuthContext)
+  const {user,userSignIn,setUser}=useContext(AuthContext)
+  const navigate=useNavigate()
 
   const handleForm = (e) => {
     e.preventDefault();
@@ -22,11 +24,18 @@ function Login() {
     console.log(user);
     userSignIn(email ,password)
     .then(data=>{
-      console.log(data.user)
-      const userEmail=data.user.email
-      axios.get(`http://localhost:5000/jwt`,{ params: { email: userEmail }, withCredentials: true })
-      .then(res=>console.log(res.data))
+      // console.log(data.user.email)
+      setUser(data.user)
+      navigate('/')
+      
+      //const userEmail = { email: data.user.email };
+      //axios.post(`http://localhost:5000/jwt`,userEmail, {withCredentials: true })
+      //.then(res=>console.log(res.data))
+
+      //navigate('/')
+      //.catch(err => console.error("Axios Error:", err));
     })
+  
     .then(err=>{
       console.log(err.message)
     })

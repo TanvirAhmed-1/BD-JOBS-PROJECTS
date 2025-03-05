@@ -1,14 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./../authentication/Authentication";
+import axios from "axios";
+import axiosSecuer from "../hook/axiosSecuer";
 
 const MyApply = () => {
   const { user } = useContext(AuthContext);
   const [data, setData] = useState([]);
+  const axiosHoook=axiosSecuer()
   useEffect(() => {
-    fetch(`http://localhost:5000/jobs-apply?email=${user.email}`)
-      .then((res) => res.json())
-      .then((data) => setData(data));
-  }, [user.email]);
+
+    // fetch(`http://localhost:5000/jobs-apply?email=${user.email}`)
+    //   .then((res) => res.json())
+    //   .then((data) => setData(data));
+    // axios(`http://localhost:5000/jobs-apply?email=${user.email}`,{withCredentials: true })
+    // .then(res=>setData(res))
+    axiosHoook.get(`/jobs-apply?email=${user.email}`)
+    .then(res=>setData(res.data))
+  }
+  , [user.email]);
 
   return (
     <div className="bg-base-100 pb-20">
